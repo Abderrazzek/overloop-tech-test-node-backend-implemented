@@ -58,6 +58,10 @@ function ArticleEdit() {
     history.push(ROUTE_ARTICLE_LIST);
   };
 
+  const handleCancel = () => {
+    history.push(ROUTE_ARTICLE_LIST);
+  };
+
   return (
     <div className="ArticleEdit">
       <h1>Edit Article</h1>
@@ -109,10 +113,30 @@ function ArticleEdit() {
             onChange={(regions) => setRegions(regions)}
           />
         </Form.Group>
-        <Button variant="primary" onClick={handleSave}>
-          Save Article
-        </Button>
+        <div className="button-container">
+          <Button variant="secondary" onClick={handleCancel}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={handleSave}>
+            Save Article
+          </Button>
+        </div>
       </Form>
+      <style>{`
+        .ArticleEdit {
+          margin: 20px;
+        }
+
+        .button-container {
+          display: flex;
+          justify-content: flex-end;
+          margin-top: 16px;
+        }
+
+        .button-container button + button {
+          margin-left: 8px;
+        }
+      `}</style>
     </div>
   );
 }

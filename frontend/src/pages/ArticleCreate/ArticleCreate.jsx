@@ -45,6 +45,10 @@ function ArticleCreate() {
     history.push(ROUTE_ARTICLE_LIST);
   };
 
+  const handleCancel = () => {
+    history.push(ROUTE_ARTICLE_LIST);
+  };
+
   return (
     <div className="ArticleCreate">
       <h1>Create Article</h1>
@@ -100,10 +104,30 @@ function ArticleCreate() {
             onChange={(regions) => setRegions(regions)}
           />
         </Form.Group>
-        <Button variant="primary" onClick={handleSave}>
-          Save Article
-        </Button>
+        <div className="button-container">
+          <Button variant="secondary" onClick={handleCancel}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={handleSave}>
+            Save Article
+          </Button>
+        </div>
       </Form>
+      <style>{`
+        .ArticleCreate {
+          margin: 20px;
+        }
+
+        .button-container {
+          display: flex;
+          justify-content: flex-end;
+          margin-top: 16px;
+        }
+
+        .button-container button + button {
+          margin-left: 8px;
+        }
+      `}</style>
     </div>
   );
 }

@@ -46,6 +46,10 @@ function AuthorEdit(props) {
     history.push(ROUTE_AUTHOR_LIST);
   };
 
+  const handleCancel = () => {
+    history.push(ROUTE_AUTHOR_LIST);
+  };
+
   return (
     <div className="AuthorEdit">
       <h1>Edit Author</h1>
@@ -86,10 +90,30 @@ function AuthorEdit(props) {
             </Form.Text>
           )}
         </Form.Group>
-        <Button variant="primary" onClick={handleSave}>
-          Save Author
-        </Button>
+        <div className="button-container">
+          <Button variant="secondary" onClick={handleCancel}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={handleSave}>
+            Save Author
+          </Button>
+        </div>
       </Form>
+      <style>{`
+        .AuthorEdit {
+          margin: 20px;
+        }
+
+        .button-container {
+          display: flex;
+          justify-content: flex-end;
+          margin-top: 16px;
+        }
+
+        .button-container button + button {
+          margin-left: 8px;
+        }
+      `}</style>
     </div>
   );
 }
