@@ -7,8 +7,11 @@ export const ROUTE_AUTHOR_PREFIX = "/authors";
 export const ROUTE_AUTHOR_LIST = "/authors/list";
 export const ROUTE_AUTHOR_CREATE = "/authors/create";
 export const ROUTE_AUTHOR_EDIT = "/authors/:authorId";
-export const authorDefaultValue = {
-  id: 0,
-  firstName: "No Author",
-  lastName: "Selected",
+const AUTHOR_DEFAULT_VALUE_ID = "id";
+const AUTHOR_DEFAULT_VALUE_FRIST_NAME = "firstName";
+const AUTHOR_DEFAULT_VALUE_LAST_NAME = "lastName";
+export const AUTHOR_DEFAULT_VALUE = {
+  [AUTHOR_DEFAULT_VALUE_ID]: 0,
+  [AUTHOR_DEFAULT_VALUE_FRIST_NAME]: "No Author",
+  [AUTHOR_DEFAULT_VALUE_LAST_NAME]: "Selected",
 };

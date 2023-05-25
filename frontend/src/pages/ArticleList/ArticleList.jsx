@@ -5,7 +5,7 @@ import Table from "react-bootstrap/Table";
 import {
   ROUTE_ARTICLE_PREFIX,
   ROUTE_ARTICLE_CREATE,
-  authorDefaultValue,
+  AUTHOR_DEFAULT_VALUE,
 } from "../../constants";
 import { listArticles } from "../../services/articles";
 
@@ -32,8 +32,8 @@ function ArticleList() {
           </td>
           <td>
             <span>
-              {`${(author || authorDefaultValue).firstName} ${
-                (author || authorDefaultValue).lastName
+              {`${(author || AUTHOR_DEFAULT_VALUE).firstName} ${
+                (author || AUTHOR_DEFAULT_VALUE).lastName
               }`}
             </span>
           </td>

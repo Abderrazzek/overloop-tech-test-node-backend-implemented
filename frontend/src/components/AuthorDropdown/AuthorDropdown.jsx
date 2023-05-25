@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import DropdownList from "react-widgets/lib/DropdownList";
 
 import { listAuthors } from "../../services/authors";
-import { authorDefaultValue } from "../../constants";
+import { AUTHOR_DEFAULT_VALUE } from "../../constants";
 
 // AuthorDropdown component
 function AuthorDropdown({ value, onChange, id }) {
@@ -13,7 +13,7 @@ function AuthorDropdown({ value, onChange, id }) {
     const fetchAuthors = async () => {
       const data = await listAuthors();
       // Prepend the default author value to the received data
-      setAuthors([authorDefaultValue, ...data]);
+      setAuthors([AUTHOR_DEFAULT_VALUE, ...data]);
     };
 
     fetchAuthors();

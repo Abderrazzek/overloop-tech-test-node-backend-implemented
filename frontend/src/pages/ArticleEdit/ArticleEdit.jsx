@@ -3,7 +3,7 @@ import { useHistory, useParams } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
-import { ROUTE_ARTICLE_LIST, authorDefaultValue } from "../../constants";
+import { ROUTE_ARTICLE_LIST, AUTHOR_DEFAULT_VALUE } from "../../constants";
 import { getArticle, editArticle } from "../../services/articles";
 import AuthorDropdown from "../../components/AuthorDropdown/AuthorDropdown";
 import RegionDropdown from "../../components/RegionDropdown/RegionDropdown";
@@ -13,7 +13,7 @@ function ArticleEdit(props) {
   const { articleId } = useParams();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [author, setAuthor] = useState(authorDefaultValue);
+  const [author, setAuthor] = useState(AUTHOR_DEFAULT_VALUE);
   const [regions, setRegions] = useState([]);
 
   useEffect(() => {
