@@ -14,11 +14,29 @@ function ArticleCreate() {
   const [content, setContent] = useState("");
   const [author, setAuthor] = useState(AUTHOR_DEFAULT_VALUE);
   const [regions, setRegions] = useState([]);
+  const [fieldErrors, setFieldErrors] = useState({});
 
   const handleSave = async () => {
+    const trimmedTitle = title.trim();
+    const trimmedContent = content.trim();
+    let errors = {};
+
+    // Check if fields are empty after trimming
+    if (trimmedTitle === "") {
+      errors.title = "Title is required.";
+    }
+    if (trimmedContent === "") {
+      errors.content = "Content is required.";
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      return;
+    }
+
     const payload = {
-      title,
-      content,
+      title: trimmedTitle,
+      content: trimmedContent,
       authorId: author.id !== 0 ? author.id : null,
       regions,
     };
@@ -38,8 +56,15 @@ function ArticleCreate() {
             type="text"
             placeholder="Title"
             value={title}
-            onChange={(event) => setTitle(event.target.value)}
+            onChange={(event) => {
+              setTitle(event.target.value);
+              setFieldErrors({ ...fieldErrors, title: null }); // Reset error when input changes
+            }}
+            isInvalid={!!fieldErrors.title} // Apply red border if there's an error
           />
+          {fieldErrors.title && (
+            <Form.Text className="text-danger">{fieldErrors.title}</Form.Text>
+          )}
         </Form.Group>
         <Form.Group>
           <Form.Label htmlFor="content-input">Content</Form.Label>
@@ -49,8 +74,15 @@ function ArticleCreate() {
             placeholder="Content"
             rows="5"
             value={content}
-            onChange={(event) => setContent(event.target.value)}
+            onChange={(event) => {
+              setContent(event.target.value);
+              setFieldErrors({ ...fieldErrors, content: null }); // Reset error when input changes
+            }}
+            isInvalid={!!fieldErrors.content} // Apply red border if there's an error
           />
+          {fieldErrors.content && (
+            <Form.Text className="text-danger">{fieldErrors.content}</Form.Text>
+          )}
         </Form.Group>
         <Form.Group>
           <Form.Label htmlFor="author-input">Author</Form.Label>

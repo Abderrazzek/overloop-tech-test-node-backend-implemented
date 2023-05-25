@@ -10,9 +10,27 @@ function AuthorCreate() {
   const history = useHistory();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [fieldErrors, setFieldErrors] = useState({});
 
   const handleSave = async () => {
-    const payload = { firstName, lastName };
+    const trimmedFirstName = firstName.trim();
+    const trimmedLastName = lastName.trim();
+    let errors = {};
+
+    // Check if fields are empty after trimming
+    if (trimmedFirstName === "") {
+      errors.firstName = "First name is required.";
+    }
+    if (trimmedLastName === "") {
+      errors.lastName = "Last name is required.";
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setFieldErrors(errors);
+      return;
+    }
+
+    const payload = { firstName: trimmedFirstName, lastName: trimmedLastName };
     await createAuthor(payload);
     history.push(ROUTE_AUTHOR_LIST);
   };
@@ -27,8 +45,17 @@ function AuthorCreate() {
             type="text"
             placeholder="First Name"
             value={firstName}
-            onChange={(event) => setFirstName(event.target.value)}
+            onChange={(event) => {
+              setFirstName(event.target.value);
+              setFieldErrors({ ...fieldErrors, firstName: null }); // Reset error when input changes
+            }}
+            isInvalid={!!fieldErrors.firstName} // Apply red border if there's an error
           />
+          {fieldErrors.firstName && (
+            <Form.Text className="text-danger">
+              {fieldErrors.firstName}
+            </Form.Text>
+          )}
         </Form.Group>
         <Form.Group>
           <Form.Label>Last Name</Form.Label>
@@ -36,8 +63,17 @@ function AuthorCreate() {
             type="text"
             placeholder="Last Name"
             value={lastName}
-            onChange={(event) => setLastName(event.target.value)}
+            onChange={(event) => {
+              setLastName(event.target.value);
+              setFieldErrors({ ...fieldErrors, lastName: null }); // Reset error when input changes
+            }}
+            isInvalid={!!fieldErrors.lastName} // Apply red border if there's an error
           />
+          {fieldErrors.lastName && (
+            <Form.Text className="text-danger">
+              {fieldErrors.lastName}
+            </Form.Text>
+          )}
         </Form.Group>
         <Button variant="primary" onClick={handleSave}>
           Save Author
