@@ -1,32 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 
 import { ROUTE_ARTICLE_LIST, authorDefaultValue } from "../../constants";
-import { getArticle, editArticle } from "../../services/articles";
-import AuthorDropdown from "../../components/AuthorDropdown.js/AuthorDropdown";
+import { createArticle } from "../../services/articles";
+import AuthorDropdown from "../../components/AuthorDropdown/AuthorDropdown";
 import RegionDropdown from "../../components/RegionDropdown/RegionDropdown";
 
-function ArticleEdit(props) {
+function ArticleCreate() {
   const history = useHistory();
-  const { articleId } = useParams();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [author, setAuthor] = useState(authorDefaultValue);
   const [regions, setRegions] = useState([]);
-
-  useEffect(() => {
-    const fetchArticle = async () => {
-      const data = await getArticle(articleId);
-      setTitle(data.title);
-      setContent(data.content);
-      setRegions(data.regions);
-      if (data.author && data.author.id != 0) setAuthor(data.author);
-    };
-
-    fetchArticle();
-  }, [articleId]);
 
   const handleSave = async () => {
     const payload = {
@@ -35,17 +22,19 @@ function ArticleEdit(props) {
       authorId: author.id !== 0 ? author.id : null,
       regions,
     };
-    await editArticle(articleId, payload);
+
+    await createArticle(payload);
     history.push(ROUTE_ARTICLE_LIST);
   };
 
   return (
-    <div className="ArticleEdit">
-      <h1>Edit Article</h1>
+    <div className="ArticleCreate">
+      <h1>Create Article</h1>
       <Form>
         <Form.Group>
-          <Form.Label>Title</Form.Label>
+          <Form.Label htmlFor="title-input">Title</Form.Label>
           <Form.Control
+            id="title-input"
             type="text"
             placeholder="Title"
             value={title}
@@ -53,8 +42,9 @@ function ArticleEdit(props) {
           />
         </Form.Group>
         <Form.Group>
-          <Form.Label>Content</Form.Label>
+          <Form.Label htmlFor="content-input">Content</Form.Label>
           <Form.Control
+            id="content-input"
             as="textarea"
             placeholder="Content"
             rows="5"
@@ -63,15 +53,17 @@ function ArticleEdit(props) {
           />
         </Form.Group>
         <Form.Group>
-          <Form.Label>Author</Form.Label>
+          <Form.Label htmlFor="author-input">Author</Form.Label>
           <AuthorDropdown
+            id="author-input"
             value={author}
             onChange={(author) => setAuthor(author)}
           />
         </Form.Group>
         <Form.Group>
-          <Form.Label>Regions</Form.Label>
+          <Form.Label htmlFor="regions-input">Regions</Form.Label>
           <RegionDropdown
+            id="regions-input"
             value={regions}
             onChange={(regions) => setRegions(regions)}
           />
@@ -84,4 +76,4 @@ function ArticleEdit(props) {
   );
 }
 
-export default ArticleEdit;
+export default ArticleCreate;

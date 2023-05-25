@@ -5,7 +5,7 @@ import { listAuthors } from "../../services/authors";
 import { authorDefaultValue } from "../../constants";
 
 // AuthorDropdown component
-function AuthorDropdown({ value, onChange }) {
+function AuthorDropdown({ value, onChange, id }) {
   const [authors, setAuthors] = useState([]);
 
   useEffect(() => {
@@ -27,7 +27,7 @@ function AuthorDropdown({ value, onChange }) {
   );
 
   return (
-    <div className="AuthorDropdown">
+    <div id={id} className="AuthorDropdown">
       {/* DropdownList component from react-widgets */}
       <DropdownList
         value={value}
