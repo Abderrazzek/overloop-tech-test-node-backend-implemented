@@ -26,6 +26,10 @@ function AuthorDropdown({ value, onChange, id }) {
     </span>
   );
 
+  const handleClearSelectedAuthor = () => {
+    onChange(AUTHOR_DEFAULT_VALUE);
+  };
+
   return (
     <div id={id} className="AuthorDropdown">
       {/* DropdownList component from react-widgets */}
@@ -39,6 +43,11 @@ function AuthorDropdown({ value, onChange, id }) {
         itemComponent={renderAuthor}
         valueComponent={renderAuthor}
       />
+      {value.id !== 0 && (
+        <button onClick={handleClearSelectedAuthor}>
+          Clear Selected Author
+        </button>
+      )}
     </div>
   );
 }
