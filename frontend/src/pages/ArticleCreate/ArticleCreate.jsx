@@ -2,14 +2,21 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { useSnackbar } from "notistack";
 
-import { ROUTE_ARTICLE_LIST, AUTHOR_DEFAULT_VALUE } from "../../constants";
+import {
+  ROUTE_ARTICLE_LIST,
+  AUTHOR_DEFAULT_VALUE,
+  SNACKBAR_VARIANT_SUCCESS,
+  SNACKBAR_VARIANT_ERROR,
+} from "../../constants";
 import { createArticle } from "../../services/articles";
 import AuthorDropdown from "../../components/AuthorDropdown/AuthorDropdown";
 import RegionDropdown from "../../components/RegionDropdown/RegionDropdown";
 
 function ArticleCreate() {
   const history = useHistory();
+  const { enqueueSnackbar } = useSnackbar();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [author, setAuthor] = useState(AUTHOR_DEFAULT_VALUE);
@@ -41,8 +48,17 @@ function ArticleCreate() {
       regions,
     };
 
-    await createArticle(payload);
-    history.push(ROUTE_ARTICLE_LIST);
+    try {
+      await createArticle(payload);
+      enqueueSnackbar("Article created successfully", {
+        variant: SNACKBAR_VARIANT_SUCCESS,
+      });
+      history.push(ROUTE_ARTICLE_LIST);
+    } catch (error) {
+      enqueueSnackbar("Failed to create article", {
+        variant: SNACKBAR_VARIANT_ERROR,
+      });
+    }
   };
 
   const handleCancel = () => {

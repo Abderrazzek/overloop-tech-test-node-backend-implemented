@@ -2,13 +2,19 @@ import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { useSnackbar } from "notistack";
 
-import { ROUTE_AUTHOR_LIST } from "../../constants";
+import {
+  ROUTE_AUTHOR_LIST,
+  SNACKBAR_VARIANT_SUCCESS,
+  SNACKBAR_VARIANT_ERROR,
+} from "../../constants";
 import { getAuthor, editAuthor } from "../../services/authors";
 
-function AuthorEdit(props) {
+function AuthorEdit() {
   const history = useHistory();
   const { authorId } = useParams();
+  const { enqueueSnackbar } = useSnackbar();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
@@ -42,8 +48,18 @@ function AuthorEdit(props) {
     }
 
     const payload = { firstName: trimmedFirstName, lastName: trimmedLastName };
-    await editAuthor(authorId, payload);
-    history.push(ROUTE_AUTHOR_LIST);
+
+    try {
+      await editAuthor(authorId, payload);
+      enqueueSnackbar("Author updated successfully", {
+        variant: SNACKBAR_VARIANT_SUCCESS,
+      });
+      history.push(ROUTE_AUTHOR_LIST);
+    } catch (error) {
+      enqueueSnackbar("Failed to update author", {
+        variant: SNACKBAR_VARIANT_ERROR,
+      });
+    }
   };
 
   const handleCancel = () => {

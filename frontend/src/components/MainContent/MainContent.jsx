@@ -23,24 +23,37 @@ function MainContent() {
     <div className="MainContent mt-3">
       <Container>
         <Switch>
+          {/* Route for article list */}
           <Route path={ROUTE_ARTICLE_LIST}>
             <ArticleList />
           </Route>
+
+          {/* Route for creating a new article */}
           <Route path={ROUTE_ARTICLE_CREATE}>
             <ArticleCreate />
           </Route>
+
+          {/* Route for editing an existing article */}
           <Route path={ROUTE_ARTICLE_EDIT}>
             <ArticleEdit />
           </Route>
+
+          {/* Route for author list */}
           <Route path={ROUTE_AUTHOR_LIST}>
             <AuthorList />
           </Route>
+
+          {/* Route for creating a new author */}
           <Route path={ROUTE_AUTHOR_CREATE}>
             <AuthorCreate />
           </Route>
+
+          {/* Route for editing an existing author */}
           <Route path={ROUTE_AUTHOR_EDIT}>
             <AuthorEdit />
           </Route>
+
+          {/* Default route redirects to the article list */}
           <Route path={ROUTE_HOME}>
             <Redirect to={ROUTE_ARTICLE_LIST} />
           </Route>

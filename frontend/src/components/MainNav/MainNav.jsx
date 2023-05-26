@@ -14,11 +14,16 @@ function MainNav() {
 
   return (
     <div className="MainNav">
+      {/* Navigation bar */}
       <Navbar bg="dark" variant="dark">
+        {/* Brand logo */}
         <Navbar.Brand as={Link} to={ROUTE_HOME}>
           Overloop Tech Test
         </Navbar.Brand>
+
+        {/* Navigation links */}
         <Nav className="mr-auto">
+          {/* Articles link */}
           <Nav.Link
             as={Link}
             to={ROUTE_ARTICLE_LIST}
@@ -26,6 +31,8 @@ function MainNav() {
           >
             Articles
           </Nav.Link>
+
+          {/* Authors link */}
           <Nav.Link
             as={Link}
             to={ROUTE_AUTHOR_LIST}

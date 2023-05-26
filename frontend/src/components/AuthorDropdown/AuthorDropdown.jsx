@@ -3,7 +3,7 @@ import DropdownList from "react-widgets/lib/DropdownList";
 import { useSnackbar } from "notistack";
 
 import { listAuthors } from "../../services/authors";
-import { AUTHOR_DEFAULT_VALUE } from "../../constants";
+import { AUTHOR_DEFAULT_VALUE, SNACKBAR_VARIANT_ERROR } from "../../constants";
 
 // AuthorDropdown component
 function AuthorDropdown({ value, onChange, id }) {
@@ -18,7 +18,9 @@ function AuthorDropdown({ value, onChange, id }) {
         // Prepend the default author value to the received data
         setAuthors([AUTHOR_DEFAULT_VALUE, ...data]);
       } catch (error) {
-        enqueueSnackbar("Failed to fetch authors", { variant: "error" });
+        enqueueSnackbar("Failed to fetch authors", {
+          variant: SNACKBAR_VARIANT_ERROR,
+        });
       }
     };
 

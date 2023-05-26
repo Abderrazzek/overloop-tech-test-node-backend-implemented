@@ -2,8 +2,14 @@ import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { useSnackbar } from "notistack";
 
-import { ROUTE_ARTICLE_LIST, AUTHOR_DEFAULT_VALUE } from "../../constants";
+import {
+  ROUTE_ARTICLE_LIST,
+  AUTHOR_DEFAULT_VALUE,
+  SNACKBAR_VARIANT_SUCCESS,
+  SNACKBAR_VARIANT_ERROR,
+} from "../../constants";
 import { getArticle, editArticle } from "../../services/articles";
 import AuthorDropdown from "../../components/AuthorDropdown/AuthorDropdown";
 import RegionDropdown from "../../components/RegionDropdown/RegionDropdown";
@@ -11,6 +17,8 @@ import RegionDropdown from "../../components/RegionDropdown/RegionDropdown";
 function ArticleEdit() {
   const history = useHistory();
   const { articleId } = useParams();
+  const { enqueueSnackbar } = useSnackbar();
+
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [author, setAuthor] = useState(AUTHOR_DEFAULT_VALUE);
@@ -19,15 +27,21 @@ function ArticleEdit() {
 
   useEffect(() => {
     const fetchArticle = async () => {
-      const data = await getArticle(articleId);
-      setTitle(data.title);
-      setContent(data.content);
-      setRegions(data.regions);
-      if (data.author && data.author.id !== 0) setAuthor(data.author);
+      try {
+        const data = await getArticle(articleId);
+        setTitle(data.title);
+        setContent(data.content);
+        setRegions(data.regions);
+        if (data.author && data.author.id !== 0) setAuthor(data.author);
+      } catch (error) {
+        enqueueSnackbar("Failed to fetch article", {
+          variant: SNACKBAR_VARIANT_ERROR,
+        });
+      }
     };
 
     fetchArticle();
-  }, [articleId]);
+  }, [articleId, enqueueSnackbar]);
 
   const handleSave = async () => {
     const trimmedTitle = title.trim();
@@ -54,8 +68,17 @@ function ArticleEdit() {
       regions,
     };
 
-    await editArticle(articleId, payload);
-    history.push(ROUTE_ARTICLE_LIST);
+    try {
+      await editArticle(articleId, payload);
+      enqueueSnackbar("Article saved successfully", {
+        variant: SNACKBAR_VARIANT_SUCCESS,
+      });
+      history.push(ROUTE_ARTICLE_LIST);
+    } catch (error) {
+      enqueueSnackbar("Failed to save article", {
+        variant: SNACKBAR_VARIANT_ERROR,
+      });
+    }
   };
 
   const handleCancel = () => {

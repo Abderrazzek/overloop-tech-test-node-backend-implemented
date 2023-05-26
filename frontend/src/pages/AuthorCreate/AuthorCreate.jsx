@@ -2,12 +2,18 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { useSnackbar } from "notistack";
 
-import { ROUTE_AUTHOR_LIST } from "../../constants";
+import {
+  ROUTE_AUTHOR_LIST,
+  SNACKBAR_VARIANT_SUCCESS,
+  SNACKBAR_VARIANT_ERROR,
+} from "../../constants";
 import { createAuthor } from "../../services/authors";
 
 function AuthorCreate() {
   const history = useHistory();
+  const { enqueueSnackbar } = useSnackbar();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
@@ -31,8 +37,18 @@ function AuthorCreate() {
     }
 
     const payload = { firstName: trimmedFirstName, lastName: trimmedLastName };
-    await createAuthor(payload);
-    history.push(ROUTE_AUTHOR_LIST);
+
+    try {
+      await createAuthor(payload);
+      enqueueSnackbar("Author created successfully", {
+        variant: SNACKBAR_VARIANT_SUCCESS,
+      });
+      history.push(ROUTE_AUTHOR_LIST);
+    } catch (error) {
+      enqueueSnackbar("Failed to create author", {
+        variant: SNACKBAR_VARIANT_ERROR,
+      });
+    }
   };
 
   const handleCancel = () => {

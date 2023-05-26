@@ -1,21 +1,33 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Table from "react-bootstrap/Table";
+import { useSnackbar } from "notistack";
 
-import { ROUTE_AUTHOR_PREFIX, ROUTE_AUTHOR_CREATE } from "../../constants";
+import {
+  ROUTE_AUTHOR_PREFIX,
+  ROUTE_AUTHOR_CREATE,
+  SNACKBAR_VARIANT_ERROR,
+} from "../../constants";
 import { listAuthors } from "../../services/authors";
 
 function AuthorList() {
+  const { enqueueSnackbar } = useSnackbar();
   const [authors, setAuthors] = useState([]);
 
   useEffect(() => {
     const fetchAuthors = async () => {
-      const data = await listAuthors();
-      setAuthors(data);
+      try {
+        const data = await listAuthors();
+        setAuthors(data);
+      } catch (error) {
+        enqueueSnackbar("Failed to fetch authors", {
+          variant: SNACKBAR_VARIANT_ERROR,
+        });
+      }
     };
 
     fetchAuthors();
-  }, []);
+  }, [enqueueSnackbar]);
 
   const renderAuthors = () =>
     authors.map((author) => {
