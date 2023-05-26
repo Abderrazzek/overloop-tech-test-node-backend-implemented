@@ -11,9 +11,13 @@ function AuthorDropdown({ value, onChange, id }) {
   useEffect(() => {
     // Fetch authors from the server
     const fetchAuthors = async () => {
-      const data = await listAuthors();
-      // Prepend the default author value to the received data
-      setAuthors([AUTHOR_DEFAULT_VALUE, ...data]);
+      try {
+        const data = await listAuthors();
+        // Prepend the default author value to the received data
+        setAuthors([AUTHOR_DEFAULT_VALUE, ...data]);
+      } catch (error) {
+        console.error("Failed to fetch authors:", error);
+      }
     };
 
     fetchAuthors();
@@ -43,6 +47,7 @@ function AuthorDropdown({ value, onChange, id }) {
         itemComponent={renderAuthor}
         valueComponent={renderAuthor}
       />
+      {/* Display clear button if an author is selected */}
       {value.id !== 0 && (
         <button onClick={handleClearSelectedAuthor}>
           Clear Selected Author
