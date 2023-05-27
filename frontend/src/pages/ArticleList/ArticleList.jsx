@@ -1,18 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Table from "react-bootstrap/Table";
-import { useSnackbar } from "notistack";
 
 import {
   ROUTE_ARTICLE_PREFIX,
   ROUTE_ARTICLE_CREATE,
   AUTHOR_DEFAULT_VALUE,
-  SNACKBAR_VARIANT_ERROR,
 } from "../../constants";
 import { listArticles } from "../../services/articles";
 
 function ArticleList() {
-  const { enqueueSnackbar } = useSnackbar();
   const [articles, setArticles] = useState([]);
 
   useEffect(() => {
@@ -21,14 +18,13 @@ function ArticleList() {
         const data = await listArticles();
         setArticles(data);
       } catch (error) {
-        enqueueSnackbar("Failed to fetch articles", {
-          variant: SNACKBAR_VARIANT_ERROR,
-        });
+        console.error("Failed to fetch articles", error);
+        // Handle the error appropriately, e.g., display a notification
       }
     };
 
     fetchArticles();
-  }, [enqueueSnackbar]);
+  }, []);
 
   const renderArticles = () =>
     articles.map((article) => {

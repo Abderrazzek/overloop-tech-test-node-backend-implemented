@@ -15,5 +15,3 @@ export const AUTHOR_DEFAULT_VALUE = {
   [AUTHOR_DEFAULT_VALUE_FRIST_NAME]: "No Author",
   [AUTHOR_DEFAULT_VALUE_LAST_NAME]: "Selected",
 };
-export const SNACKBAR_VARIANT_ERROR = "error";
-export const SNACKBAR_VARIANT_SUCCESS = "success";

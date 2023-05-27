@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Multiselect from "react-widgets/lib/Multiselect";
-import { useSnackbar } from "notistack";
-
 import { listRegions } from "../../services/regions";
-import { SNACKBAR_VARIANT_ERROR } from "../../constants";
 
 function RegionDropdown({ value, onChange, id }) {
   const [regions, setRegions] = useState([]);
-  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     const fetchRegions = async () => {
@@ -15,14 +11,13 @@ function RegionDropdown({ value, onChange, id }) {
         const data = await listRegions();
         setRegions(data);
       } catch (error) {
-        enqueueSnackbar("Failed to fetch regions", {
-          variant: SNACKBAR_VARIANT_ERROR,
-        });
+        console.error("Failed to fetch regions", error);
+        // Handle the error appropriately, e.g., display a notification
       }
     };
 
     fetchRegions();
-  }, [enqueueSnackbar]);
+  }, []);
 
   return (
     <div id={id} className="RegionDropdown">
