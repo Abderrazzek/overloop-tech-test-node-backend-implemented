@@ -23,6 +23,7 @@ function RegionDropdown({ value, onChange, id }) {
     <div id={id} className="RegionDropdown">
       {/* Multiselect component from react-widgets */}
       <Multiselect
+        data-testid="region-dropdown-inner"
         value={value}
         data={regions}
         textField="name"

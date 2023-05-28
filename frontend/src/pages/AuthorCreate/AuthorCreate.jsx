@@ -50,8 +50,9 @@ function AuthorCreate() {
       <h1>Create Author</h1>
       <Form>
         <Form.Group>
-          <Form.Label>First Name</Form.Label>
+          <Form.Label htmlFor="firstNameInput">First Name</Form.Label>
           <Form.Control
+            id="firstNameInput"
             type="text"
             placeholder="First Name"
             value={firstName}
@@ -68,8 +69,9 @@ function AuthorCreate() {
           )}
         </Form.Group>
         <Form.Group>
-          <Form.Label>Last Name</Form.Label>
+          <Form.Label htmlFor="lastNameInput">Last Name</Form.Label>
           <Form.Control
+            id="lastNameInput"
             type="text"
             placeholder="Last Name"
             value={lastName}

@@ -61,8 +61,9 @@ function AuthorEdit() {
       <h1>Edit Author</h1>
       <Form>
         <Form.Group>
-          <Form.Label>First Name</Form.Label>
+          <Form.Label htmlFor="firstName">First Name</Form.Label>
           <Form.Control
+            id="firstName"
             type="text"
             placeholder="First Name"
             value={firstName}
@@ -79,8 +80,9 @@ function AuthorEdit() {
           )}
         </Form.Group>
         <Form.Group>
-          <Form.Label>Last Name</Form.Label>
+          <Form.Label htmlFor="lastName">Last Name</Form.Label>
           <Form.Control
+            id="lastName"
             type="text"
             placeholder="Last Name"
             value={lastName}

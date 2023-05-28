@@ -46,7 +46,7 @@ function AuthorList() {
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>Name</th>
+            <th htmlFor="authorName">Name</th>
           </tr>
         </thead>
         <tbody>{renderAuthors()}</tbody>

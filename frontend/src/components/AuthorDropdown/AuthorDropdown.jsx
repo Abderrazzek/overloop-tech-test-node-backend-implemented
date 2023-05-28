@@ -36,9 +36,10 @@ function AuthorDropdown({ value, onChange, id }) {
   };
 
   return (
-    <div id={id} className="AuthorDropdown">
+    <div className="AuthorDropdown">
       {/* DropdownList component from react-widgets */}
       <DropdownList
+        data-testid={id}
         value={value}
         data={authors}
         textField="firstName"

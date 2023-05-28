@@ -78,8 +78,9 @@ function ArticleEdit() {
       <h1>Edit Article</h1>
       <Form>
         <Form.Group>
-          <Form.Label>Title</Form.Label>
+          <Form.Label htmlFor="title">Title</Form.Label>
           <Form.Control
+            id="title"
             type="text"
             placeholder="Title"
             value={title}
@@ -94,8 +95,9 @@ function ArticleEdit() {
           )}
         </Form.Group>
         <Form.Group>
-          <Form.Label>Content</Form.Label>
+          <Form.Label htmlFor="content">Content</Form.Label>
           <Form.Control
+            id="content"
             as="textarea"
             placeholder="Content"
             rows="5"
@@ -111,15 +113,17 @@ function ArticleEdit() {
           )}
         </Form.Group>
         <Form.Group>
-          <Form.Label>Author</Form.Label>
+          <Form.Label htmlFor="author">Author</Form.Label>
           <AuthorDropdown
+            id="author"
             value={author}
             onChange={(author) => setAuthor(author)}
           />
         </Form.Group>
         <Form.Group>
-          <Form.Label>Regions</Form.Label>
+          <Form.Label htmlFor="regions">Regions</Form.Label>
           <RegionDropdown
+            id="regions"
             value={regions}
             onChange={(regions) => setRegions(regions)}
           />

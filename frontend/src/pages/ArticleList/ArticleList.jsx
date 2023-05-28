@@ -47,7 +47,7 @@ function ArticleList() {
     });
 
   return (
-    <div className="ArticleList">
+    <div className="ArticleList" data-testid="article-list-page">
       <h1>Articles</h1>
       <Link className="d-block mb-3" to={ROUTE_ARTICLE_CREATE}>
         Create a new Article
