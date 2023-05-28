@@ -1,5 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
+import { act } from "react-dom/test-utils";
 
 import RegionDropdown from "../RegionDropdown";
 
@@ -27,10 +28,12 @@ jest.mock("../../../services/regions", () => ({
 }));
 
 describe("RegionDropdown", () => {
-  beforeEach(() => {
-    render(
-      <RegionDropdown id="region-dropdown" value={[]} onChange={() => {}} />
-    );
+  beforeEach(async () => {
+    await act(async () => {
+      render(
+        <RegionDropdown id="region-dropdown" value={[]} onChange={() => {}} />
+      );
+    });
   });
 
   it("renders the component with the specified ID", () => {
